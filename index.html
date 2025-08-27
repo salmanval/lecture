@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laparoscopic Right Hemihepatectomy Lecture Series - Dr. Farid Froghi</title>
+    <!-- Google Font Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basic styles for the entire page */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
+            overflow-x: hidden; /* Prevent horizontal scrollbar during animations */
+        }
+
+        /* A container to center the content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Animation Keyframes --- */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Styling for the header section */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #1c3d5a;
+            margin: 0;
+            font-size: 3em;
+            font-weight: 700;
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+
+        .header .subtitle {
+            color: #5a7b9d;
+            font-size: 1.25em;
+            margin-top: 8px;
+            font-weight: 500;
+            animation: fadeInSlideUp 0.8s 0.2s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        /* Container for the icons and description */
+        .intro-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 40px auto 0 auto;
+            text-align: left;
+        }
+
+        .intro-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            opacity: 0; /* Start hidden for animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+        
+        /* Staggered animation delays for intro items */
+        .intro-item:nth-child(1) { animation-delay: 0.4s; }
+        .intro-item:nth-child(2) { animation-delay: 0.6s; }
+        .intro-item:nth-child(3) { animation-delay: 0.8s; }
+
+        .intro-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            color: #5a7b9d;
+        }
+
+        .intro-item h2 {
+            font-size: 1.2em;
+            color: #1c3d5a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .intro-item p {
+            font-size: 0.95em;
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        /* Main content area wrapper */
+        .main-content {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(28, 61, 90, 0.08);
+            border: 1px solid #eef2f7;
+            opacity: 0;
+            animation: fadeInSlideUp 0.8s 1s ease-out forwards;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2em;
+            color: #1c3d5a;
+            margin-top: 0;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        /* Styling for the video gallery */
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 35px;
+            justify-content: center;
+        }
+
+        /* Styling for each individual video container */
+        .video-container {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 5px 15px rgba(28, 61, 90, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(28, 61, 90, 0.1);
+        }
+
+        .video-container h3 {
+            padding: 18px 22px;
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: 500;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eef2f7;
+            color: #34495e;
+        }
+        
+        /* Aspect Ratio for Mobile Video (9:16) */
+        .video-embed {
+            position: relative;
+            width: 100%;
+            padding-top: 177.78%; 
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 900px) {
+            .intro-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .intro-item {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2em; }
+            .header .subtitle { font-size: 1.1em; }
+            .video-gallery { grid-template-columns: 1fr; }
+            .container { padding: 15px; }
+            .main-content { padding: 25px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Page Header -->
+        <header class="header">
+            <h1>Lecture Series: Laparoscopic Right Hemihepatectomy</h1>
+            <p class="subtitle">By Dr. Farid Froghi</p>
+            
+            <div class="intro-section">
+                <div class="intro-item">
+                    <!-- Icon: Liver -->
+                    <svg class="intro-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.109 1.109 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177.177a2.25 2.25 0 00-.998 1.787l-2.076 8.225a1.125 1.125 0 01-2.224 0l-2.076-8.225a2.25 2.25 0 00-.998-1.787L12.75 17.066z" />
+                    </svg>
+                    <h2>Advanced Procedure</h2>
+                    <p>This series explores the intricate steps of a Laparoscopic Right Hemihepatectomy, a minimally invasive surgical technique.</p>
+                </div>
+                <div class="intro-item">
+                    <!-- Icon: Surgical Tools -->
+                    <svg class="intro-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m-18.424 4.844a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622" />
+                    </svg>
+                    <h2>Expert Technique</h2>
+                    <p>Learn from Dr. Farid Froghi's expertise in controlling vessels, dividing liver tissue, and ensuring patient safety.</p>
+                </div>
+                 <div class="intro-item">
+                    <!-- Icon: Microscope -->
+                    <svg class="intro-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
+                    </svg>
+                    <h2>Quicker Recovery</h2>
+                    <p>Understand how this high-tech surgery makes a big difference for patients, leading to a faster and smoother recovery process.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content area for the videos -->
+        <main class="main-content">
+            <h2 class="section-title">Course Lectures</h2>
+            <div class="video-gallery">
+
+                <!-- Video 1 -->
+                <div class="video-container">
+                    <h3>Part 1: Introduction and Patient Positioning</h3>
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://app.heygen.com/embeds/04c4acfdfaae41bb8ddf8226eb2db720" 
+                            title="HeyGen video player" 
+                            allow="encrypted-media; fullscreen;" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-container">
+                    <h3>Part 2: Port Placement and Initial Dissection</h3>
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://app.heygen.com/embeds/47d108989d374c91887bcb4f71602aa9" 
+                            title="HeyGen video player" 
+                            allow="encrypted-media; fullscreen;" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-container">
+                    <h3>Part 3: Parenchymal Transection</h3>
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://app.heygen.com/embeds/e8a6707a133e4b20afd5ea4d0ed02ee6" 
+                            title="HeyGen video player" 
+                            allow="encrypted-media; fullscreen;" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-container">
+                    <h3>Part 4: Final Steps and Closure</h3>
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://app.heygen.com/embeds/1f141be353414b1a852c5366b2bb9b0b" 
+                            title="HeyGen video player" 
+                            allow="encrypted-media; fullscreen;" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+</body>
+</html>
