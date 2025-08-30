@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
     <style>
         /* Basic styles for the entire page */
         body {
@@ -130,16 +133,28 @@
             font-weight: 700;
         }
 
-        /* Styling for the video gallery */
-        .video-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 35px;
+        /* --- Carousel Styles --- */
+        .video-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 550px; /* Increased width for better spacing */
+            margin: 0 auto; /* Center the carousel */
+            padding: 20px 20px 60px 20px; /* More bottom padding for pagination */
+            background: #f5f7fa;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .swiper-slide {
+            display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         /* Styling for each individual video container */
         .video-container {
+            position: relative; /* Needed for positioning the course number */
+            width: 100%;
             background-color: #f8f9fa;
             border-radius: 12px;
             border: 1px solid #eef2f7;
@@ -153,8 +168,28 @@
             box-shadow: 0 12px 30px rgba(28, 61, 90, 0.1);
         }
 
+        /* Course Number Badge */
+        .course-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px; /* Increased size */
+            height: 50px; /* Increased size */
+            background-color: #1c3d5a;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em; /* Increased font size */
+            font-weight: 700;
+            z-index: 10;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(28, 61, 90, 0.2); /* Added shadow */
+        }
+
         .video-container h3 {
-            padding: 18px 22px;
+            padding: 18px 22px 18px 75px; /* Adjusted padding to prevent overlap */
             margin: 0;
             font-size: 1.1em;
             font-weight: 500;
@@ -178,6 +213,43 @@
             height: 100%;
             border: 0;
         }
+        
+        /* Custom Swiper Navigation/Pagination */
+        .swiper-button-next, .swiper-button-prev {
+            width: 48px;
+            height: 48px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(28, 61, 90, 0.15);
+            color: #1c3d5a;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: #1c3d5a;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .swiper-pagination {
+            bottom: 20px !important;
+        }
+
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background-color: #d0d9e3;
+            opacity: 1;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #1c3d5a;
+            transform: scale(1.2);
+        }
 
         /* Mobile Responsive Styles */
         @media (max-width: 900px) {
@@ -193,10 +265,25 @@
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2em; }
             .header .subtitle { font-size: 1.1em; }
-            .video-gallery { grid-template-columns: 1fr; }
             .container { padding: 15px; }
             .main-content { padding: 25px; }
+            .video-carousel { padding: 15px 15px 50px 15px; max-width: 100%;} /* Remove side padding on mobile */
+            .swiper-button-next, .swiper-button-prev {
+                width: 40px;
+                height: 40px;
+            }
+             .swiper-button-next::after, .swiper-button-prev::after {
+                font-size: 16px;
+            }
         }
+         @media (max-width: 500px) {
+            .video-carousel {
+                padding: 0 0px 40px 0px;
+            }
+             .swiper-button-next, .swiper-button-prev {
+                display: none; /* Hide arrows on small mobile, rely on swipe */
+            }
+         }
 
     </style>
 </head>
@@ -221,7 +308,7 @@
                 <div class="intro-item">
                     <!-- Icon: Surgical Tools -->
                     <svg class="intro-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                       <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m-18.424 4.844a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622" />
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m0 0a15.998 15.998 0 013.388-1.622m-18.424 4.844a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998 0 003.388-1.622m0 0a15.998 15.998_0003.388-1.622m0 0a15.998 15.998 0 003.388-1.622" />
                     </svg>
                     <h2>Expert Technique</h2>
                     <p>Learn from Dr. Farid Froghi's expertise in controlling vessels, dividing liver tissue, and ensuring patient safety.</p>
@@ -240,64 +327,83 @@
         <!-- Main content area for the videos -->
         <main class="main-content">
             <h2 class="section-title">Course Lectures</h2>
-            <div class="video-gallery">
 
-                <!-- Video 1 -->
-                <div class="video-container">
-                    <h3>Part 1: Introduction and Patient Positioning</h3>
-                    <div class="video-embed">
-                        <iframe 
-                            src="https://app.heygen.com/embeds/04c4acfdfaae41bb8ddf8226eb2db720" 
-                            title="HeyGen video player" 
-                            allow="encrypted-media; fullscreen;" 
-                            allowfullscreen>
-                        </iframe>
+            <!-- Swiper Carousel -->
+            <div class="swiper video-carousel">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <div class="video-container">
+                             <div class="course-number">01</div>
+                            <h3>Introduction and Patient Positioning</h3>
+                            <div class="video-embed">
+                                <iframe src="https://app.heygen.com/embeds/04c4acfdfaae41bb8ddf8226eb2db720" title="HeyGen video player" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation allow-forms" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <div class="video-container">
+                            <div class="course-number">02</div>
+                            <h3>Port Placement and Initial Dissection</h3>
+                            <div class="video-embed">
+                                <iframe src="https://app.heygen.com/embeds/47d108989d374c91887bcb4f71602aa9" title="HeyGen video player" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation allow-forms" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <div class="video-container">
+                             <div class="course-number">03</div>
+                            <h3>Parenchymal Transection</h3>
+                            <div class="video-embed">
+                                <iframe src="https://app.heygen.com/embeds/e8a6707a133e4b20afd5ea4d0ed02ee6" title="HeyGen video player" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation allow-forms" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide">
+                        <div class="video-container">
+                            <div class="course-number">04</div>
+                            <h3>Final Steps and Closure</h3>
+                            <div class="video-embed">
+                                <iframe src="https://app.heygen.com/embeds/1f141be353414b1a852c5366b2bb9b0b" title="HeyGen video player" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation allow-forms" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Video 2 -->
-                <div class="video-container">
-                    <h3>Part 2: Port Placement and Initial Dissection</h3>
-                    <div class="video-embed">
-                        <iframe 
-                            src="https://app.heygen.com/embeds/47d108989d374c91887bcb4f71602aa9" 
-                            title="HeyGen video player" 
-                            allow="encrypted-media; fullscreen;" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-
-                <!-- Video 3 -->
-                <div class="video-container">
-                    <h3>Part 3: Parenchymal Transection</h3>
-                    <div class="video-embed">
-                        <iframe 
-                            src="https://app.heygen.com/embeds/e8a6707a133e4b20afd5ea4d0ed02ee6" 
-                            title="HeyGen video player" 
-                            allow="encrypted-media; fullscreen;" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-
-                <!-- Video 4 -->
-                <div class="video-container">
-                    <h3>Part 4: Final Steps and Closure</h3>
-                    <div class="video-embed">
-                        <iframe 
-                            src="https://app.heygen.com/embeds/1f141be353414b1a852c5366b2bb9b0b" 
-                            title="HeyGen video player" 
-                            allow="encrypted-media; fullscreen;" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-        </main>
 
+        </main>
     </div>
 
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.video-carousel', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 40,
+            centeredSlides: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
