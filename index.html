@@ -387,9 +387,13 @@
     <script>
         const swiper = new Swiper('.video-carousel', {
             loop: true,
-            slidesPerView: 1,
-            spaceBetween: 40,
+            grabCursor: true, // For better desktop interaction
             centeredSlides: true,
+            
+            // Mobile-first settings
+            slidesPerView: 1.2,
+            spaceBetween: 20,
+
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
@@ -398,12 +402,16 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            
+            // Revert to single slide view on larger screens
+            breakpoints: {
+                768: {
+                  slidesPerView: 1,
+                  spaceBetween: 40,
+                }
+            }
         });
     </script>
 </body>
 </html>
-
-
-
-
 
